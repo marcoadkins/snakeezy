@@ -6,7 +6,7 @@ require_relative './game'
 def move(board)
   puts board
   game = Game.new(board)
-  move = game.determine_move
+  move = game.determine_best_move
   puts "MOVE: " + move
 
   { "move": move }
