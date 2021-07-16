@@ -29,13 +29,13 @@ class Game
   def move_cords(direction)
     case direction
     when 'up'
-      [me.head.x + 1, me.head.y]
-    when 'down'
-      [me.head.x - 1, me.head.y]
-    when 'left'
-      [me.head.x, me.head.y - 1]
-    when 'right'
       [me.head.x, me.head.y + 1]
+    when 'down'
+      [me.head.x, me.head.y - 1]
+    when 'left'
+      [me.head.x - 1, me.head.y]
+    when 'right'
+      [me.head.x + 1, me.head.y]
     end
   end
 
