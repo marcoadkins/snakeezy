@@ -6,9 +6,9 @@ class Grid
   end
 
   def draw_snake(s)
-    grid[s.head.x][s.head.y] = 1
-    s.body.each do |b|
-      grid[b.x][b.y] = 's'
+    grid[s.head.x][s.head.y] = 'h'
+    s.body.each_with_index do |b, i|
+      grid[b.x][b.y] = i == s.body.length ? 't' : 'b'
     end
   end
 

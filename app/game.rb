@@ -16,6 +16,9 @@ class Game
     @grid = Grid.new(height, width)
 
     setup_grid
+
+    puts "Game: #{self.inspect}"
+    puts "Grid: #{grid.grid.inspect}"
   end
 
   def determine_move
