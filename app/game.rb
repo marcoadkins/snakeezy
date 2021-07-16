@@ -26,7 +26,12 @@ class Game
     DIRECTIONS.shuffle.each do |direction|
       determine_move(direction, scores, me.head.x, me.head.y, 3)
     end
-    scores.max_by{ |_k,v| v }[0]
+
+    sorted_moves = scores.sort_by{ |_k,v| -v }.keys
+    sorted_moves.each do |direction|
+      x,y = move_cords(x, y, direction)
+      return direction if traversable?(x,y)
+    end
   end
 
   def determine_move(original_direction, scores, x, y, iterations)
