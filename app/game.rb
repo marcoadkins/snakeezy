@@ -9,12 +9,14 @@ class Game
     @height = game_data[:board][:height]
     @width = game_data[:board][:width]
     @me = Snake.new(game_data[:you])
-    @snakes = self.enemy_snake_data(game_data).map { |snake_data| Snake.new(snake_data) }
+    @snakes = enemy_snake_data(game_data).map { |snake_data| Snake.new(snake_data) }
     @food = game_data[:board][:food].map { |food_data| Food.new(food_data) }
     @grid = Grid.new(height, width)
 
     setup_grid
   end
+
+  private
 
   def setup_grid
     food.each do |f|
@@ -28,7 +30,7 @@ class Game
     grid.draw_snake(me)
   end
 
-  def self.enemy_snake_data(game_data)
+  def enemy_snake_data(game_data)
     game_data[:board][:snakes].filter do |snake_data|
       snake_data[:id] == game_data[:you][:id]
     end
