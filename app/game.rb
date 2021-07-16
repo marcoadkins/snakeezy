@@ -36,7 +36,7 @@ class Game
     ranks = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
 
     DIRECTIONS.each do |direction|
-      rank_move(direction, ranks, me.head.x, me.head.y, 5)
+      rank_move(direction, ranks, me.head.x, me.head.y, 3)
     end
 
     ranks
