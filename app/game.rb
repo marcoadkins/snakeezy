@@ -29,7 +29,7 @@ class Game
 
     sorted_moves = scores.sort_by{ |_k,v| -v }
     sorted_moves.each do |direction, _score|
-      x,y = move_cords(x, y, direction)
+      x,y = move_cords(me.head.x, me.head.y, direction)
       return direction if traversable?(x,y)
     end
   end
