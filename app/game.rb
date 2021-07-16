@@ -22,23 +22,29 @@ class Game
   end
 
   def determine_move
-    DIRECTIONS.shuffle.each do |direction|
-      return direction if traversable?(*move_cords(direction))
+    scores = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
+    x = me.head.x
+    y = me.head.y
+    3.times do
+      DIRECTIONS.shuffle.each do |direction|
+        x,y = move_cords(x, y, direction)
+        scores[direction] += 1 if traversable?(x,y)
+      end
     end
 
-    'up'
+    scores.max_by{ |_k,v| v }[0]
   end
 
-  def move_cords(direction)
+  def move_cords(x,y, direction)
     case direction
     when 'up'
-      [me.head.x, me.head.y + 1]
+      [x, y + 1]
     when 'down'
-      [me.head.x, me.head.y - 1]
+      [x, y - 1]
     when 'left'
-      [me.head.x - 1, me.head.y]
+      [x - 1, y]
     when 'right'
-      [me.head.x + 1, me.head.y]
+      [x + 1, y]
     end
   end
 
