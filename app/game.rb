@@ -19,7 +19,7 @@ class Game
   end
 
   def determine_move
-    DIRECTIONS.each do |direction|
+    DIRECTIONS.shuffle.each do |direction|
       return direction if traversable?(*move_cords(direction))
     end
 
