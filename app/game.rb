@@ -24,7 +24,7 @@ class Game
   def determine_best_move
     ranked_moves = rank_moves.sort_by{ |_k,v| -v }
 
-    puts "SCORES: #{ranked_moves.inspect}"
+    puts "RANKS: #{ranked_moves.inspect}"
 
     ranked_moves.each do |direction, _score|
       x,y = move_cords(me.head.x, me.head.y, direction)
@@ -36,7 +36,7 @@ class Game
     ranks = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
 
     DIRECTIONS.each do |direction|
-      rank_move(direction, ranks, me.head.x, me.head.y, 3)
+      rank_move(direction, ranks, me.head.x, me.head.y, 5)
     end
 
     ranks
