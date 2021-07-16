@@ -33,22 +33,24 @@ class Game
   end
 
   def rank_moves
-    scores = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
-    
+    ranks = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
+
     DIRECTIONS.each do |direction|
-      rank_move(direction, scores, me.head.x, me.head.y, 3)
+      rank_move(direction, ranks, me.head.x, me.head.y, 3)
     end
+
+    ranks
   end
 
-  def rank_move(original_direction, scores, x, y, iterations)
+  def rank_move(original_direction, ranks, x, y, iterations)
     return if iterations == 0
 
     iterations = iterations - 1
     DIRECTIONS.each do |direction|
       x,y = move_cords(x, y, direction)
       if traversable?(x,y)
-        scores[original_direction] += 1
-        rank_move(direction, scores, x, y, iterations)
+        ranks[original_direction] += 1
+        rank_move(direction, ranks, x, y, iterations)
       end
     end
   end
