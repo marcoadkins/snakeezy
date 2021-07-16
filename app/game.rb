@@ -22,19 +22,25 @@ class Game
   end
 
   def determine_best_move
-    scores = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
-    DIRECTIONS.shuffle.each do |direction|
-      determine_move(direction, scores, me.head.x, me.head.y, 3)
-    end
+    ranked_moves = rank_moves.sort_by{ |_k,v| -v }
 
-    sorted_moves = scores.sort_by{ |_k,v| -v }
-    sorted_moves.each do |direction, _score|
+    puts "SCORES: #{ranked_moves.inspect}"
+
+    ranked_moves.each do |direction, _score|
       x,y = move_cords(me.head.x, me.head.y, direction)
       return direction if traversable?(x,y)
     end
   end
 
-  def determine_move(original_direction, scores, x, y, iterations)
+  def rank_moves
+    scores = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
+    
+    DIRECTIONS.each do |direction|
+      rank_move(direction, scores, me.head.x, me.head.y, 3)
+    end
+  end
+
+  def rank_move(original_direction, scores, x, y, iterations)
     return if iterations == 0
 
     iterations = iterations - 1
@@ -42,7 +48,7 @@ class Game
       x,y = move_cords(x, y, direction)
       if traversable?(x,y)
         scores[original_direction] += 1
-        determine_move(direction, scores, x, y, iterations)
+        rank_move(direction, scores, x, y, iterations)
       end
     end
   end
