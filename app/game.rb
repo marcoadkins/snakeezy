@@ -28,8 +28,6 @@ class Game
     grid.draw_snake(me)
   end
 
-  private
-
   def self.enemy_snake_data(game_data)
     game_data[:board][:snakes].filter do |snake_data|
       snake_data[:id] == game_data[:you][:id]
