@@ -66,6 +66,9 @@ class Game
   end
 
   def traversable?(x, y)
+    puts "CORDS: #{[x,y]}"
+    puts "IN BOUNDS: #{in_bounds?(x,y)}"
+    puts "EMPTY?: #{grid.empty?(x,y)}"
     in_bounds?(x,y) && grid.empty?(x,y)
   end
 end
