@@ -6,10 +6,10 @@ class Grid
   end
 
   def draw_snake(s)
-    grid[s.head.x][s.head.y] = 'h'
     s.body.each_with_index do |b, i|
-      grid[b.x][b.y] = i == s.body.length ? 't' : 'b'
+      grid[b.x][b.y] = i == (s.body.length - 1) ? 't' : 'b'
     end
+    grid[s.head.x][s.head.y] = 'h'
   end
 
   def draw_food(f)
