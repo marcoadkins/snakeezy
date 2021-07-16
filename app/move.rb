@@ -5,12 +5,8 @@ require_relative './game'
 # TODO: Use the information in board to decide your next move.
 def move(board)
   puts board
-  g = Game.new(board)
-  puts g.inspect
-
-  # Choose a random direction to move in
-  possible_moves = ["up", "down", "left", "right"]
-  move = possible_moves.sample
+  game = Game.new(board)
+  move = game.determine_move
   puts "MOVE: " + move
 
   { "move": move }

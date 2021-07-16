@@ -5,6 +5,8 @@ require_relative './grid'
 class Game
   attr_accessor :height, :width, :me, :snakes, :food, :grid
 
+  DIRECTIONS = ["up", "down", "left", "right"]
+
   def initialize(game_data)
     @height = game_data[:board][:height]
     @width = game_data[:board][:width]
@@ -14,6 +16,27 @@ class Game
     @grid = Grid.new(height, width)
 
     setup_grid
+  end
+
+  def determine_move
+    DIRECTIONS.each do |direction|
+      return direction if traversable?(*move_cords(direction))
+    end
+
+    'up'
+  end
+
+  def move_cords(direction)
+    case direction
+    when 'up'
+      [me.head.x + 1, me.head.y]
+    when 'down'
+      [me.head.x - 1, me.head.y]
+    when 'left'
+      [me.head.x, me.head.y - 1]
+    when 'right'
+      [me.head.x, me.head.y + 1]
+    end
   end
 
   private
@@ -34,5 +57,15 @@ class Game
     game_data[:board][:snakes].filter do |snake_data|
       snake_data[:id] == game_data[:you][:id]
     end
+  end
+
+  def in_bounds?(x, y)
+    return false if x < 0 || x >= width
+    return false if y < 0 || y >= height
+    true
+  end
+
+  def traversable?(x, y)
+    in_bounds?(x,y) && grid.empty?(x,y)
   end
 end

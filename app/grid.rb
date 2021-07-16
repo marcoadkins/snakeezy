@@ -15,4 +15,8 @@ class Grid
   def draw_food(f)
     grid[f.x][f.y] = 'f'
   end
+
+  def empty?(x,y)
+    grid[x][y] == 0
+  end
 end
