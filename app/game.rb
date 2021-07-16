@@ -27,8 +27,8 @@ class Game
       determine_move(direction, scores, me.head.x, me.head.y, 3)
     end
 
-    sorted_moves = scores.sort_by{ |_k,v| -v }.keys
-    sorted_moves.each do |direction|
+    sorted_moves = scores.sort_by{ |_k,v| -v }
+    sorted_moves.each do |direction, _score|
       x,y = move_cords(x, y, direction)
       return direction if traversable?(x,y)
     end
