@@ -5,7 +5,7 @@ require_relative './grid'
 class Game
   attr_accessor :height, :width, :me, :snakes, :food, :grid
 
-  DIRECTIONS = ["up", "down", "left", "right"]
+  DIRECTIONS = %w[up down left right]
 
   def initialize(game_data)
     @height = game_data[:board][:height]
@@ -22,50 +22,12 @@ class Game
   end
 
   def determine_best_move
-    ranked_moves = rank_moves.sort_by{ |_k,v| -v }
-
-    puts "RANKS: #{ranked_moves.inspect}"
-
-    ranked_moves.each do |direction, _score|
-      x,y = move_cords(me.head.x, me.head.y, direction)
-      return direction if traversable?(x,y)
-    end
-  end
-
-  def rank_moves
-    ranks = {'up' => 0, 'down' => 0, 'left' => 0, 'right' => 0}
-
-    DIRECTIONS.each do |direction|
-      rank_move(direction, ranks, me.head.x, me.head.y, 3)
+    DIRECTIONS.shuffle.each do |direction|
+      puts "DIRECTION: #{direction}"
+      return direction if traversable?(*me.head.send(direction))
     end
 
-    ranks
-  end
-
-  def rank_move(original_direction, ranks, x, y, iterations)
-    return if iterations == 0
-
-    iterations = iterations - 1
-    DIRECTIONS.each do |direction|
-      x,y = move_cords(x, y, direction)
-      if traversable?(x,y)
-        ranks[original_direction] += 1
-        rank_move(direction, ranks, x, y, iterations)
-      end
-    end
-  end
-
-  def move_cords(x,y, direction)
-    case direction
-    when 'up'
-      [x, y + 1]
-    when 'down'
-      [x, y - 1]
-    when 'left'
-      [x - 1, y]
-    when 'right'
-      [x + 1, y]
-    end
+    'up'
   end
 
   private
@@ -96,7 +58,6 @@ class Game
 
   def traversable?(x, y)
     puts "CORDS: #{[x,y]}"
-    puts "IN BOUNDS: #{in_bounds?(x,y)}"
     puts "EMPTY?: #{grid.empty?(x,y)}"
     in_bounds?(x,y) && grid.empty?(x,y)
   end
